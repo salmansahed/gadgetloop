@@ -8,6 +8,8 @@ import { Button } from "@heroui/react";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { FaUserCheck } from "react-icons/fa";
 import { IoGrid } from "react-icons/io5";
+import ThemeSwitch from "./theme-switcher";
+import ThemeSwitcher from "./theme-switcher";
 
 interface NavLink {
   name: string;
@@ -46,7 +48,7 @@ export default function Navbar(): React.JSX.Element {
       )}
 
       <nav className="sticky top-0 z-50 w-full bg-white/70 backdrop-blur-md border-b border-gray-200/50 dark:bg-gray-900/70 dark:border-gray-800/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-40">
+        <div className="container mx-auto px-3 sm:px-6 lg:px-8 relative z-40">
           <div className="flex items-center justify-between h-16">
             {/* Logo Section */}
             <div className="shrink-0">
@@ -55,22 +57,22 @@ export default function Navbar(): React.JSX.Element {
                 onClick={() => setIsOpen(false)}
                 className="text-xl font-bold tracking-wider"
               >
-                <span className="bg-linear-to-r from-purple-600 to bg-indigo-600 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-fuchsia-400 bg-clip-text text-transparent transition-colors duration-300">
                   GadgetLoop
                 </span>
               </Link>
             </div>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <div className="flex items-center space-x-8">
                 {currentLinks.map((link: NavLink, index: number) => (
                   <Link
                     key={index}
                     href={link.path}
-                    className={`text-sm font-medium text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-emerald-400 transition-colors duration-200 ${
+                    className={`text-sm font-medium text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors duration-200 ${
                       pathname === link.path
-                        ? "text-purple-500 border px-2 py-1 rounded-lg"
+                        ? "text-purple-500 border dark:border-gray-500 px-2 py-1 rounded-lg"
                         : ""
                     }`}
                   >
@@ -81,9 +83,10 @@ export default function Navbar(): React.JSX.Element {
             </div>
 
             {/* Desktop Action Buttons */}
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               {isLoggedIn ? (
                 <div className="space-x-4 flex items-center">
+                  <ThemeSwitcher />
                   <Button
                     onClick={() => setIsLoggedIn(false)}
                     className="bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-300"
@@ -101,10 +104,11 @@ export default function Navbar(): React.JSX.Element {
                 </div>
               ) : (
                 <div className="space-x-4 flex items-center">
+                  <ThemeSwitcher />
                   <Button
                     onClick={() => setIsLoggedIn(true)}
                     variant="outline"
-                    className="rounded-lg"
+                    className="rounded-lg dark:border-gray-600"
                   >
                     <FaUserCheck />
                     Sign Up
@@ -121,7 +125,8 @@ export default function Navbar(): React.JSX.Element {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="flex md:hidden">
+            <div className="flex items-center gap-4 lg:hidden">
+              <ThemeSwitcher />
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
@@ -140,7 +145,7 @@ export default function Navbar(): React.JSX.Element {
 
         {/* Mobile Dropdown Menu Layer */}
         {isOpen && (
-          <div className="absolute top-16 left-0 w-full z-50 bg-white/95 backdrop-blur-lg dark:bg-gray-900/95 border-b border-gray-200 dark:border-gray-800 shadow-xl md:hidden">
+          <div className="absolute top-16 left-0 w-full z-50 bg-white/95 backdrop-blur-lg dark:bg-gray-900/95 border-b border-gray-200 dark:border-gray-800 shadow-xl lg:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {currentLinks.map((link: NavLink, index: number) => (
                 <Link

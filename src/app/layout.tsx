@@ -3,6 +3,7 @@ import "./globals.css";
 import { Metadata } from "next";
 import React from "react";
 import Navbar from "../components/Navbar";
+import { Providers } from "./providers";
 
 const josefinSans = Josefin_Sans({
   variable: "--font-josefin-sans",
@@ -21,10 +22,16 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${josefinSans.className} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
-        <Navbar />
-        <main>{children}</main>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${josefinSans.className} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col bg-background text-foreground">
+        <Providers>
+          <Navbar />
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   );
