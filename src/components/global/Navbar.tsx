@@ -8,8 +8,8 @@ import { Button } from "@heroui/react";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { FaUserCheck } from "react-icons/fa";
 import { IoGrid } from "react-icons/io5";
-import ThemeSwitch from "./theme-switcher";
-import ThemeSwitcher from "./theme-switcher";
+import ThemeSwitch from "../theme-switcher";
+import ThemeSwitcher from "../theme-switcher";
 
 interface NavLink {
   name: string;

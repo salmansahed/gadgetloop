@@ -2,7 +2,7 @@ import { Josefin_Sans } from "next/font/google";
 import "./globals.css";
 import { Metadata } from "next";
 import React from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/global/Navbar";
 import { Providers } from "./providers";
 
 const josefinSans = Josefin_Sans({
