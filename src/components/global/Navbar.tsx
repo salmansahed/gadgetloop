@@ -10,6 +10,7 @@ import { FaUserCheck } from "react-icons/fa";
 import { IoGrid } from "react-icons/io5";
 import ThemeSwitcher from "../theme-switcher";
 import { authClient } from "../../lib/auth-client";
+import LogoutModal from "../auth/LogoutModal";
 
 interface NavLink {
   name: string;
@@ -94,10 +95,7 @@ export default function Navbar(): React.JSX.Element {
                     <IoGrid />
                     Dashboard
                   </Button>
-                  <Button className="bg-red-500 hover:bg-red-600 rounded-lg transition-all duration-200">
-                    Logout
-                    <FiLogOut />
-                  </Button>
+                  <LogoutModal />
                 </div>
               ) : (
                 <div className="space-x-4 flex items-center">
@@ -111,10 +109,12 @@ export default function Navbar(): React.JSX.Element {
                       Sign Up
                     </Button>
                   </Link>
-                  <Button className="bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-200">
-                    <FiLogIn />
-                    Login
-                  </Button>
+                  <Link href="/login">
+                    <Button className="bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-200">
+                      <FiLogIn />
+                      Login
+                    </Button>
+                  </Link>
                 </div>
               )}
             </div>
@@ -166,15 +166,7 @@ export default function Navbar(): React.JSX.Element {
                       <IoGrid />
                       Dashboard
                     </Button>
-                    <Button
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                      className="w-full bg-red-500 hover:bg-red-600 rounded-lg transition-all duration-200"
-                    >
-                      Logout
-                      <FiLogOut />
-                    </Button>
+                    <LogoutModal />
                   </div>
                 ) : (
                   <div className="flex flex-col space-y-3">
@@ -190,15 +182,17 @@ export default function Navbar(): React.JSX.Element {
                         Sign Up
                       </Button>
                     </Link>
-                    <Button
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                      className="w-full bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-200"
-                    >
-                      <FiLogIn />
-                      Login
-                    </Button>
+                    <Link href="/login">
+                      <Button
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
+                        className="w-full bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-200"
+                      >
+                        <FiLogIn />
+                        Login
+                      </Button>
+                    </Link>
                   </div>
                 )}
               </div>
