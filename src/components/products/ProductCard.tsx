@@ -27,7 +27,7 @@ const ProductCard = ({ product }: ProductCardProps): React.JSX.Element => {
   return (
     <div
       key={product.id}
-      className="group relative flex flex-col rounded-2xl bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/80 dark:border-white/6 hover:border-slate-300 dark:hover:border-white/12 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden"
+      className="group relative flex flex-col rounded-2xl bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/12 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden"
     >
       {/* Image Container with Dynamic Badge Overlay */}
       <div className="relative aspect-square w-full bg-slate-100 dark:bg-slate-950 overflow-hidden">

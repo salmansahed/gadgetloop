@@ -96,7 +96,7 @@ export default function Features(): React.JSX.Element {
           return (
             <div
               key={feature.id}
-              className={`group relative p-6 rounded-2xl bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/80 dark:border-white/6 ${feature.hoverBorder} ${feature.hoverBg} ${feature.hoverShadow} transition-all duration-300 hover:-translate-y-1.5 overflow-hidden`}
+              className={`group relative p-6 rounded-2xl bg-white/70 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200/80 dark:border-white/10 ${feature.hoverBorder} ${feature.hoverBg} ${feature.hoverShadow} transition-all duration-300 hover:-translate-y-1.5 overflow-hidden`}
             >
               {/* Corner Glow Blur on Hover */}
               <div
