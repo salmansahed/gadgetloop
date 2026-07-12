@@ -21,7 +21,14 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Button } from "@heroui/react";
 
 export default function AboutPage(): React.JSX.Element {
-  const corePrinciples = [
+
+  interface CorePrinciple {
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    title: string;
+    desc: string;
+  }
+
+  const corePrinciples: CorePrinciple[] = [
     {
       icon: FiShield,
       title: "Military-Grade Security",
@@ -39,7 +46,14 @@ export default function AboutPage(): React.JSX.Element {
     },
   ];
 
-  const howItWorks = [
+  interface HowItWorksStep {
+    step: string;
+    title: string;
+    desc: string;
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  }
+
+  const howItWorks: HowItWorksStep[] = [
     {
       step: "01",
       title: "Discover & List",
@@ -60,7 +74,15 @@ export default function AboutPage(): React.JSX.Element {
     },
   ];
 
-  const stats = [
+  interface Stat {
+    label: string;
+    value: string;
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    color: string;
+    bg: string;
+  }
+
+  const stats: Stat[] = [
     {
       label: "Active Tech Hunters",
       value: "15k+",
@@ -122,7 +144,7 @@ export default function AboutPage(): React.JSX.Element {
               </Button>
             </Link>
             <Link href="#our-story">
-              <Button className="px-8 h-14 rounded-full bg-white dark:bg-white/5 border border-slate-300 dark:border-white/15 text-slate-900 dark:text-white font-bold hover:bg-slate-100 dark:hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
+              <Button className="px-8 h-14 rounded-full bg-white dark:bg-white/5 border border-slate-300 dark:border-white/15 text-black  dark:text-white font-bold hover:bg-slate-100 dark:hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
                 Read Our Story
               </Button>
             </Link>
@@ -132,7 +154,10 @@ export default function AboutPage(): React.JSX.Element {
 
       <div className="max-w-6xl mx-auto px-6 space-y-40">
         {/* Our Story Section */}
-        <section className="grid lg:grid-cols-2 gap-16 items-center scroll-m-28" id="our-story">
+        <section
+          className="grid lg:grid-cols-2 gap-16 items-center scroll-m-28"
+          id="our-story"
+        >
           <div className="space-y-8">
             <h2 className="text-4xl md:text-5xl font-black">
               The Origin Story
@@ -203,7 +228,7 @@ export default function AboutPage(): React.JSX.Element {
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full translate-x-16 -translate-y-16 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500" />
                 <item.icon className="w-10 h-10 text-purple-600 dark:text-purple-400 mb-8 group-hover:scale-125 group-hover:text-cyan-500 transition-all duration-500" />
-                <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white">
+                <h3 className="text-2xl font-bold mb-4 text-black dark:text-white">
                   {item.title}
                 </h3>
                 <p className="text-slate-600 dark:text-zinc-400 leading-relaxed">
@@ -241,7 +266,7 @@ export default function AboutPage(): React.JSX.Element {
                   <span className="text-5xl font-black text-slate-100 dark:text-white/5 absolute -top-4 -z-10 group-hover:-translate-y-2 transition-transform duration-500">
                     {item.step}
                   </span>
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                  <h3 className="text-2xl font-bold text-black dark:text-white">
                     {item.title}
                   </h3>
                   <p className="text-slate-600 dark:text-zinc-400 leading-relaxed max-w-xs">
@@ -271,7 +296,7 @@ export default function AboutPage(): React.JSX.Element {
                 </div>
 
                 <div className="space-y-1">
-                  <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white group-hover/item:text-transparent group-hover/item:bg-clip-text group-hover/item:bg-linear-to-r group-hover/item:from-purple-600 group-hover/item:to-cyan-600 dark:group-hover/item:from-purple-400 dark:group-hover/item:to-cyan-400 transition-all duration-300">
+                  <h2 className="text-4xl md:text-5xl font-black tracking-tight text-black dark:text-white group-hover/item:text-transparent group-hover/item:bg-clip-text group-hover/item:bg-linear-to-r group-hover/item:from-purple-600 group-hover/item:to-cyan-600 dark:group-hover/item:from-purple-400 dark:group-hover/item:to-cyan-400 transition-all duration-300">
                     {stat.value}
                   </h2>
                   <p className="text-slate-500 dark:text-zinc-400 uppercase tracking-widest text-xs font-bold font-mono">
@@ -304,7 +329,7 @@ export default function AboutPage(): React.JSX.Element {
               <h4 className="text-purple-600 dark:text-purple-400 font-bold uppercase tracking-widest text-sm mb-2">
                 Architect & Founder
               </h4>
-              <h2 className="text-4xl font-black text-slate-900 dark:text-white">
+              <h2 className="text-4xl font-black text-black dark:text-white">
                 Salman Sahed
               </h2>
 
@@ -365,9 +390,11 @@ export default function AboutPage(): React.JSX.Element {
           <p className="text-slate-600 dark:text-zinc-400 text-lg">
             Start trading your gadgets securely today.
           </p>
-          <Button className="px-10 h-14 rounded-full bg-linear-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] hover:scale-105 transition-all duration-300">
-            Create Free Account
-          </Button>
+          <Link href="/signup">
+            <Button className="px-10 h-14 rounded-full bg-linear-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] hover:scale-105 transition-all duration-300">
+              Create Free Account
+            </Button>
+          </Link>
         </section>
       </div>
     </main>
