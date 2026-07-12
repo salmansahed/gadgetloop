@@ -75,7 +75,7 @@ export default function Footer(): React.JSX.Element {
             <h4 className="text-white font-bold mb-6">Company</h4>
             <ul className="space-y-3 text-zinc-400 text-sm">
               <li className="hover:text-purple-400 transition-all cursor-pointer">
-                <Link href="/about-us">About Us</Link>
+                <Link href="/about">About Us</Link>
               </li>
               <li className="hover:text-purple-400 transition-all cursor-pointer">
                 <Link href="/">Careers</Link>
