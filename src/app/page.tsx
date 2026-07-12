@@ -1,4 +1,5 @@
 import Categories from "../components/home/Categories";
+import FAQSection from "../components/home/FAQSection";
 import FeaturedProducts from "../components/home/FeaturedProducts";
 import Features from "../components/home/Features";
 import HeroSection from "../components/home/HeroSection";
@@ -14,6 +15,7 @@ const Home = () => {
       <FeaturedProducts />
       <PlatformStats />
       <HowItWorks />
+      <FAQSection />
     </div>
   );
 };
