@@ -6,9 +6,11 @@ import {
   FiHeadphones,
   FiMonitor,
   FiCpu,
+  FiArrowRight,
 } from "react-icons/fi";
 import { IoGameController } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
+import { Button } from "@heroui/react";
 
 // Category data structure with styling configurations
 interface CategoryItem {
@@ -133,14 +135,14 @@ export default function Categories(): React.JSX.Element {
         </div>
 
         {/* View All Button */}
-        <Link
-          href="/explore" 
-          className="w-full md:w-auto justify-center text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 flex items-center gap-1 group whitespace-nowrap bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 px-4 py-2 rounded-xl hover:shadow-xs"
-        >
-          See All Categories
-          <span className="transform group-hover:translate-x-1 transition-transform duration-300">
-            <FaArrowRight />
-          </span>
+        <Link href="/explore">
+          <Button
+            variant="outline"
+            className="rounded-xl text-indigo-700 dark:text-indigo-400 dark:bg-indigo-900/20 font-bold bg-indigo-100/50 border border-indigo-200/80 dark:border-indigo-900/80 transition-all duration-300 group w-full"
+          >
+            See All Categories
+            <FiArrowRight className="group-hover:translate-x-1 transition-all duration-300" />
+          </Button>
         </Link>
       </div>
 
