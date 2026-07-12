@@ -1,13 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import { Input, Button, Form } from "@heroui/react";
+import { Input, Button, Form, TextField, FieldError } from "@heroui/react";
 import { FiSend, FiZap } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 export default function Newsletter(): React.JSX.Element {
-  const [email, setEmail] = useState<string>("");
-
   const handleSubscribe = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -19,7 +16,7 @@ export default function Newsletter(): React.JSX.Element {
       },
     );
     console.log("🚀 ~ handleSubscribe ~ userData:", userData);
-    setEmail("");
+    e.currentTarget.reset();
   };
 
   return (
@@ -91,14 +88,20 @@ export default function Newsletter(): React.JSX.Element {
               </p>
 
               <Form onSubmit={handleSubscribe} className="space-y-5">
-                <Input
+                <TextField
+                  isRequired
                   name="email"
                   type="email"
-                  placeholder="Enter your email address"
-                  className="w-full h-12 rounded-xl"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                  validate={(value: string) => {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return emailRegex.test(value)
+                      ? null
+                      : "Please enter a valid email address.";
+                  }}
+                >
+                  <Input placeholder="john@example.com" className="h-14" />
+                  <FieldError />
+                </TextField>
 
                 <Button
                   type="submit"

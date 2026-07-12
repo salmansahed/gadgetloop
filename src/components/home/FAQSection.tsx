@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Chip } from "@heroui/react";
+import Link from "next/link";
 import React, { useState } from "react";
 import {
   FiPlus,
@@ -108,10 +109,12 @@ export default function FaqSection(): React.JSX.Element {
             </p>
 
             {/* Glowing Interactive CTA Button */}
-            <Button className="text-xs font-bold rounded-xl bg-slate-950 text-white dark:bg-white dark:text-slate-950 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 group/btn w-full sm:w-fit">
-              Contact Support
-              <FiArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-all" />
-            </Button>
+            <Link href="/contact">
+              <Button className="text-xs font-bold rounded-xl bg-slate-950 text-white dark:bg-white dark:text-slate-950 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 group/btn w-full sm:w-fit">
+                Contact Support
+                <FiArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-all" />
+              </Button>
+            </Link>
           </div>
         </div>
 

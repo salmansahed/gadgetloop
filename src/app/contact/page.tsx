@@ -177,6 +177,7 @@ export default function ContactPage({}: ContactPageProps): React.JSX.Element {
                     </Description>
                     <FieldGroup className="space-y-6">
                       <div className="grid md:grid-cols-2 gap-6">
+                        {/* Name */}
                         <TextField
                           isRequired
                           name="name"
@@ -191,6 +192,7 @@ export default function ContactPage({}: ContactPageProps): React.JSX.Element {
                           <Input placeholder="John Doe" className="h-14" />
                           <FieldError />
                         </TextField>
+                        {/* Email */}
                         <TextField
                           isRequired
                           name="email"

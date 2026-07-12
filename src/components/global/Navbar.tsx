@@ -8,8 +8,8 @@ import { Button } from "@heroui/react";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { FaUserCheck } from "react-icons/fa";
 import { IoGrid } from "react-icons/io5";
-import ThemeSwitch from "../theme-switcher";
 import ThemeSwitcher from "../theme-switcher";
+import { authClient } from "../../lib/auth-client";
 
 interface NavLink {
   name: string;
@@ -18,8 +18,11 @@ interface NavLink {
 
 export default function Navbar(): React.JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const pathname = usePathname();
+
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
+  console.log("🚀 ~ Navbar ~ user:", user);
 
   const publicLinks: NavLink[] = [
     { name: "Home", path: "/" },
@@ -35,7 +38,7 @@ export default function Navbar(): React.JSX.Element {
     { name: "Manage Items", path: "/items/manage" },
   ];
 
-  const currentLinks: NavLink[] = isLoggedIn ? privateLinks : publicLinks;
+  const currentLinks: NavLink[] = user ? privateLinks : publicLinks;
 
   return (
     <>
@@ -84,20 +87,14 @@ export default function Navbar(): React.JSX.Element {
 
             {/* Desktop Action Buttons */}
             <div className="hidden lg:block">
-              {isLoggedIn ? (
+              {user ? (
                 <div className="space-x-4 flex items-center">
                   <ThemeSwitcher />
-                  <Button
-                    onClick={() => setIsLoggedIn(false)}
-                    className="bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-300"
-                  >
+                  <Button className="bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-300">
                     <IoGrid />
                     Dashboard
                   </Button>
-                  <Button
-                    onClick={() => setIsLoggedIn(false)}
-                    className="bg-red-500 hover:bg-red-600 rounded-lg transition-all duration-200"
-                  >
+                  <Button className="bg-red-500 hover:bg-red-600 rounded-lg transition-all duration-200">
                     Logout
                     <FiLogOut />
                   </Button>
@@ -105,18 +102,16 @@ export default function Navbar(): React.JSX.Element {
               ) : (
                 <div className="space-x-4 flex items-center">
                   <ThemeSwitcher />
-                  <Button
-                    onClick={() => setIsLoggedIn(true)}
-                    variant="outline"
-                    className="rounded-lg dark:border-gray-600"
-                  >
-                    <FaUserCheck />
-                    Sign Up
-                  </Button>
-                  <Button
-                    onClick={() => setIsLoggedIn(true)}
-                    className="bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-200"
-                  >
+                  <Link href="/signup">
+                    <Button
+                      variant="outline"
+                      className="rounded-lg dark:border-gray-600"
+                    >
+                      <FaUserCheck />
+                      Sign Up
+                    </Button>
+                  </Link>
+                  <Button className="bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-200">
                     <FiLogIn />
                     Login
                   </Button>
@@ -160,11 +155,10 @@ export default function Navbar(): React.JSX.Element {
 
               {/* Mobile Action Buttons */}
               <div className="pt-4 pb-2 border-t border-gray-200 dark:border-gray-700 px-3">
-                {isLoggedIn ? (
+                {user ? (
                   <div className="flex flex-col space-y-3">
                     <Button
                       onClick={() => {
-                        setIsLoggedIn(false);
                         setIsOpen(false);
                       }}
                       className="w-full bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-300"
@@ -174,7 +168,6 @@ export default function Navbar(): React.JSX.Element {
                     </Button>
                     <Button
                       onClick={() => {
-                        setIsLoggedIn(false);
                         setIsOpen(false);
                       }}
                       className="w-full bg-red-500 hover:bg-red-600 rounded-lg transition-all duration-200"
@@ -185,20 +178,20 @@ export default function Navbar(): React.JSX.Element {
                   </div>
                 ) : (
                   <div className="flex flex-col space-y-3">
+                    <Link href="/signup">
+                      <Button
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
+                        variant="outline"
+                        className="w-full rounded-lg"
+                      >
+                        <FaUserCheck />
+                        Sign Up
+                      </Button>
+                    </Link>
                     <Button
                       onClick={() => {
-                        setIsLoggedIn(true);
-                        setIsOpen(false);
-                      }}
-                      variant="outline"
-                      className="w-full rounded-lg"
-                    >
-                      <FaUserCheck />
-                      Sign Up
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        setIsLoggedIn(true);
                         setIsOpen(false);
                       }}
                       className="w-full bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-200"
