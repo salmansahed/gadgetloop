@@ -40,7 +40,7 @@ export default function HeroSection(): React.JSX.Element {
           </Link>
 
           {/* Action 2: Sell Gadget */}
-          <Link href="/items/add" className="w-full sm:w-auto">
+          <Link href="/product/add" className="w-full sm:w-auto">
             <Button className="w-full sm:w-auto bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-white/8 text-slate-700 dark:text-zinc-200 tracking-wide transition-all duration-300 px-8 h-12 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:-translate-y-0.5 rounded-xl gap-2 group shadow-xs">
               <FiPlusCircle className="text-base group-hover:rotate-90 transition-all duration-300" />
               Start Selling

@@ -11,6 +11,7 @@ import { IoGrid } from "react-icons/io5";
 import ThemeSwitcher from "../theme-switcher";
 import { authClient } from "../../lib/auth-client";
 import LogoutModal from "../auth/LogoutModal";
+import { useClientUserSession } from "../../hooks/user-session/useClientUserSession";
 
 interface NavLink {
   name: string;
@@ -21,9 +22,7 @@ export default function Navbar(): React.JSX.Element {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathname = usePathname();
 
-  const { data: session, isPending } = authClient.useSession();
-  const user = session?.user;
-  console.log("🚀 ~ Navbar ~ user:", user);
+  const { user, isPending } = useClientUserSession();
 
   const publicLinks: NavLink[] = [
     { name: "Home", path: "/" },
@@ -35,8 +34,8 @@ export default function Navbar(): React.JSX.Element {
   const privateLinks: NavLink[] = [
     { name: "Home", path: "/" },
     { name: "Explore", path: "/explore" },
-    { name: "Add Gadget", path: "/items/add" },
-    { name: "Manage Items", path: "/items/manage" },
+    { name: "Add Gadget", path: "/product/add" },
+    { name: "Manage Items", path: "/product/manage" },
   ];
 
   const currentLinks: NavLink[] = user ? privateLinks : publicLinks;

@@ -62,7 +62,7 @@ export default function Footer(): React.JSX.Element {
                 <Link href="/explore">Browse Gadgets</Link>
               </li>
               <li className="hover:text-purple-400 transition-all cursor-pointer">
-                <Link href="/items/add">Sell Your Tech</Link>
+                <Link href="/product/add">Sell Your Tech</Link>
               </li>
               <li className="hover:text-purple-400 transition-all cursor-pointer">
                 <Link href="/">Trade Security</Link>

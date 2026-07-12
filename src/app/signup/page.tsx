@@ -1,17 +1,14 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import SignUpForm from "../../components/auth/SignUpForm";
-import { auth } from "../../lib/auth";
-import { headers } from "next/headers";
+import { serverUserSession } from "../../lib/serverUserSession";
 
 export const metadata: Metadata = {
   title: "Sign Up",
 };
 
 const SignUpPage = async (): Promise<React.JSX.Element> => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await serverUserSession();
 
   if (session) {
     redirect("/");
