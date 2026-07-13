@@ -15,18 +15,32 @@ import {
   FieldGroup,
 } from "@heroui/react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { FiUploadCloud } from "react-icons/fi";
 import { MdDeleteForever, MdDriveFolderUpload } from "react-icons/md";
 import useImageUpload from "../../../hooks/image-upload/userImageUpload";
 import { toast } from "react-toastify";
 import { useClientUserSession } from "../../../hooks/user-session/useClientUserSession";
 
-const AddProductForm = () => {
+// CategoryItem interface defines the structure of a category item with a key and label.
+interface CategoryItem {
+  key: string;
+  label: string;
+}
+
+// finalProductData Type Define
+interface FinalProductData {
+  [k: string]: unknown;
+  authorId: string | undefined;
+  authorName: string | undefined;
+}
+
+const AddProductForm = (): React.JSX.Element => {
   const [photoRequiredError, setPhotoRequiredError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { user } = useClientUserSession();
 
+  // useImageUpload hook provides functionality for image upload, including preview URL, server URL, upload status, error handling, and functions to handle image change and removal.
   const {
     previewUrl,
     serverUrl,
@@ -40,12 +54,13 @@ const AddProductForm = () => {
     fileInputRef.current?.click();
   };
 
-  const categories = [
+  const categories: CategoryItem[] = [
     { key: "smartphone", label: "Smartphone & Tablet" },
     { key: "laptop", label: "Laptop & Desktop" },
     { key: "accessories", label: "Accessories & Smartwatches" },
   ];
 
+  
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
@@ -71,7 +86,7 @@ const AddProductForm = () => {
       setPhotoRequiredError("");
     }
 
-    const finalAddProductData = {
+    const finalAddProductData: FinalProductData = {
       ...productData,
       authorId: user?.id,
       authorName: user?.name,
@@ -93,7 +108,7 @@ const AddProductForm = () => {
           Fill in the details to list your gadget on the marketplace.
         </Description>
         <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 w-full">
-          {/* 1. Product Name */}
+          {/* Product Name */}
           <TextField name="name" isRequired className="w-full">
             <Label>Product Name</Label>
             <Input
@@ -131,7 +146,7 @@ const AddProductForm = () => {
             <FieldError />
           </Select>
 
-          {/* ৩. Brand */}
+          {/* Brand */}
           <TextField name="brand" isRequired className="w-full">
             <Label>Brand</Label>
             <Input
@@ -141,7 +156,7 @@ const AddProductForm = () => {
             <FieldError />
           </TextField>
 
-          {/* ৪. Model */}
+          {/* Model */}
           <TextField name="model" isRequired className="w-full">
             <Label>Model</Label>
             <Input
@@ -151,7 +166,7 @@ const AddProductForm = () => {
             <FieldError />
           </TextField>
 
-          {/* ৬. Price */}
+          {/* Price */}
           <TextField name="price" type="number" isRequired className="w-full">
             <Label>Price (BDT)</Label>
             <Input
@@ -161,7 +176,7 @@ const AddProductForm = () => {
             <FieldError />
           </TextField>
 
-          {/* ৭. Quantity / Stock */}
+          {/* Quantity / Stock */}
           <TextField
             name="quantity"
             type="number"
@@ -176,7 +191,7 @@ const AddProductForm = () => {
             <FieldError />
           </TextField>
 
-          {/* ৮. Color */}
+          {/* Color */}
           <TextField isRequired name="color" className="w-full">
             <Label>Color</Label>
             <Input
@@ -186,7 +201,7 @@ const AddProductForm = () => {
             <FieldError />
           </TextField>
 
-          {/* ৯. Warranty */}
+          {/* Warranty */}
           <TextField
             isRequired
             name="warranty"
@@ -201,7 +216,7 @@ const AddProductForm = () => {
             <FieldError />
           </TextField>
 
-          {/* ১০. Location */}
+          {/* Location */}
           <TextField name="location" isRequired className="w-full">
             <Label>Location</Label>
             <Input
@@ -211,7 +226,7 @@ const AddProductForm = () => {
             <FieldError />
           </TextField>
 
-          {/* ১১. Seller Name */}
+          {/*  Seller Name/Shop */}
           <TextField name="seller" isRequired className="w-full">
             <Label>Seller Name/Shop</Label>
             <Input
@@ -221,7 +236,7 @@ const AddProductForm = () => {
             <FieldError />
           </TextField>
 
-          {/* ১২. Seller Number */}
+          {/* Seller Number */}
           <TextField
             name="sellerNumber"
             type="tel"
@@ -244,7 +259,7 @@ const AddProductForm = () => {
             />
           </TextField>
 
-          {/* ১৩. Description (TextArea) */}
+          {/* Description (TextArea) */}
           <TextField
             name="description"
             isRequired
