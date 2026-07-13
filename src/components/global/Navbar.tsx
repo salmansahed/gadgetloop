@@ -87,7 +87,13 @@ export default function Navbar(): React.JSX.Element {
 
             {/* Desktop Action Buttons */}
             <div className="hidden lg:block">
-              {user ? (
+              {isPending ? (
+                <div className="space-x-4 flex items-center">
+                  <ThemeSwitcher />
+                  <div className="h-8 w-26 rounded-lg bg-gray-300 animate-pulse dark:bg-gray-600" />
+                  <div className="h-8 w-26 rounded-lg bg-gray-300 animate-pulse dark:bg-gray-600" />
+                </div>
+              ) : user ? (
                 <div className="space-x-4 flex items-center">
                   <ThemeSwitcher />
                   <Button className="bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-300">
