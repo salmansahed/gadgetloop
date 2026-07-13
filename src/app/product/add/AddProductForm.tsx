@@ -21,6 +21,7 @@ import { MdDeleteForever, MdDriveFolderUpload } from "react-icons/md";
 import useImageUpload from "../../../hooks/image-upload/userImageUpload";
 import { toast } from "react-toastify";
 import { useClientUserSession } from "../../../hooks/user-session/useClientUserSession";
+import { useRouter } from "next/navigation";
 
 // CategoryItem interface defines the structure of a category item with a key and label.
 interface CategoryItem {
@@ -39,6 +40,7 @@ const AddProductForm = (): React.JSX.Element => {
   const [photoRequiredError, setPhotoRequiredError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { user } = useClientUserSession();
+  const router = useRouter();
 
   // useImageUpload hook provides functionality for image upload, including preview URL, server URL, upload status, error handling, and functions to handle image change and removal.
   const {
@@ -60,13 +62,14 @@ const AddProductForm = (): React.JSX.Element => {
     { key: "accessories", label: "Accessories & Smartwatches" },
   ];
 
-  
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+
+    const formData = new FormData(form);
     const productData = Object.fromEntries(formData.entries()) as Record<
       string,
       unknown
@@ -90,9 +93,36 @@ const AddProductForm = (): React.JSX.Element => {
       ...productData,
       authorId: user?.id,
       authorName: user?.name,
+      productImage: serverUrl,
     };
 
-    console.log("🚀 ~ onSubmit ~ finalAddProductData:", finalAddProductData);
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/product/add`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(finalAddProductData),
+        },
+      );
+
+      const data = await res.json();
+
+      if (res.ok && data.insertedId) {
+        toast.success("Product added successfully!");
+        form.reset();
+        handleRemoveImage();
+        router.refresh();
+      } else {
+        toast.error(data.message || "Failed to add product. Please try again.");
+      }
+    } catch (error: unknown) {
+      console.error("Error inside onSubmit:", error);
+
+      toast.error("Something went wrong! Please check your connection.");
+    }
   };
 
   return (
@@ -108,8 +138,8 @@ const AddProductForm = (): React.JSX.Element => {
           Fill in the details to list your gadget on the marketplace.
         </Description>
         <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 w-full">
-          {/* Product Name */}
-          <TextField name="name" isRequired className="w-full">
+          {/* 1. Product Name */}
+          <TextField name="productName" isRequired className="w-full">
             <Label>Product Name</Label>
             <Input
               placeholder="e.g. iPhone 15 Pro Max"
@@ -118,11 +148,11 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </TextField>
 
-          {/* Category */}
+          {/* 2. Category */}
           <Select
             isRequired
             placeholder="Select one"
-            name="category"
+            name="productCategory"
             className="w-full"
           >
             <Label>Category</Label>
@@ -146,8 +176,8 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </Select>
 
-          {/* Brand */}
-          <TextField name="brand" isRequired className="w-full">
+          {/* 3. Brand */}
+          <TextField name="productBrand" isRequired className="w-full">
             <Label>Brand</Label>
             <Input
               placeholder="e.g. Apple, Samsung"
@@ -156,8 +186,8 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </TextField>
 
-          {/* Model */}
-          <TextField name="model" isRequired className="w-full">
+          {/* 4. Model */}
+          <TextField name="productModel" isRequired className="w-full">
             <Label>Model</Label>
             <Input
               placeholder="e.g. 15 Pro Max"
@@ -166,8 +196,13 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </TextField>
 
-          {/* Price */}
-          <TextField name="price" type="number" isRequired className="w-full">
+          {/* 5. Price */}
+          <TextField
+            name="productPrice"
+            type="number"
+            isRequired
+            className="w-full"
+          >
             <Label>Price (BDT)</Label>
             <Input
               placeholder="0.00"
@@ -176,9 +211,9 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </TextField>
 
-          {/* Quantity / Stock */}
+          {/* 6. Quantity / Stock */}
           <TextField
-            name="quantity"
+            name="productQuantity"
             type="number"
             isRequired
             className="w-full"
@@ -191,8 +226,8 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </TextField>
 
-          {/* Color */}
-          <TextField isRequired name="color" className="w-full">
+          {/* 7. Color */}
+          <TextField isRequired name="productColor" className="w-full">
             <Label>Color</Label>
             <Input
               placeholder="e.g. Natural Titanium"
@@ -201,10 +236,10 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </TextField>
 
-          {/* Warranty */}
+          {/* 8. Warranty */}
           <TextField
             isRequired
-            name="warranty"
+            name="productWarranty"
             type="number"
             className="w-full"
           >
@@ -216,8 +251,8 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </TextField>
 
-          {/* Location */}
-          <TextField name="location" isRequired className="w-full">
+          {/* 9. Location */}
+          <TextField name="productLocation" isRequired className="w-full">
             <Label>Location</Label>
             <Input
               placeholder="e.g. Bhaluka, Mymensingh"
@@ -226,7 +261,7 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </TextField>
 
-          {/*  Seller Name/Shop */}
+          {/* 10. Seller Name/Shop */}
           <TextField name="seller" isRequired className="w-full">
             <Label>Seller Name/Shop</Label>
             <Input
@@ -236,7 +271,7 @@ const AddProductForm = (): React.JSX.Element => {
             <FieldError />
           </TextField>
 
-          {/* Seller Number */}
+          {/* 11. Seller Number */}
           <TextField
             name="sellerNumber"
             type="tel"
@@ -250,8 +285,8 @@ const AddProductForm = (): React.JSX.Element => {
             />
             <FieldError />
           </TextField>
-          {/* Video Url */}
-          <TextField name="videoUrl" type="url" className="w-full">
+          {/* 12. Video Url (Optional) */}
+          <TextField name="productVideoUrl" type="url" className="w-full">
             <Label>Video URL (Optional)</Label>
             <Input
               placeholder="https://www.example.com"
@@ -259,9 +294,9 @@ const AddProductForm = (): React.JSX.Element => {
             />
           </TextField>
 
-          {/* Description (TextArea) */}
+          {/* 13. Description (TextArea) */}
           <TextField
-            name="description"
+            name="productDescription"
             isRequired
             className="col-span-1 md:col-span-2 w-full"
           >
@@ -272,7 +307,7 @@ const AddProductForm = (): React.JSX.Element => {
             />
             <FieldError />
           </TextField>
-          {/* Photo Field */}
+          {/* 14. Photo Field */}
           <TextField isRequired className="col-span-1 md:col-span-2 w-full">
             <Label>Product Photo</Label>
 
@@ -283,7 +318,6 @@ const AddProductForm = (): React.JSX.Element => {
                 setPhotoRequiredError("");
               }}
               type="file"
-              name="photo"
               className="hidden"
               accept="image/*"
             />
