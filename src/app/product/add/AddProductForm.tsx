@@ -34,6 +34,8 @@ interface FinalProductData {
   [k: string]: unknown;
   authorId: string | undefined;
   authorName: string | undefined;
+  productImage: string | null;
+  authorRole: string | undefined;
 }
 
 const AddProductForm = (): React.JSX.Element => {
@@ -57,9 +59,9 @@ const AddProductForm = (): React.JSX.Element => {
   };
 
   const categories: CategoryItem[] = [
-    { key: "smartphone", label: "Smartphone & Tablet" },
-    { key: "laptop", label: "Laptop & Desktop" },
-    { key: "accessories", label: "Accessories & Smartwatches" },
+    { key: "smartphone-tablet", label: "Smartphone & Tablet" },
+    { key: "laptop-desktop", label: "Laptop & Desktop" },
+    { key: "accessories-smartwatches", label: "Accessories & Smartwatches" },
   ];
 
   const onSubmit = async (
@@ -94,6 +96,9 @@ const AddProductForm = (): React.JSX.Element => {
       authorId: user?.id,
       authorName: user?.name,
       productImage: serverUrl,
+      authorRole: user?.role,
+      totalStars: 0,
+      reviewCount: 0,
     };
 
     try {
