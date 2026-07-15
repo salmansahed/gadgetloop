@@ -6,6 +6,7 @@ import HeroSection from "../components/home/HeroSection";
 import HowItWorks from "../components/home/HowItWorks";
 import Newsletter from "../components/home/Newsletter";
 import PlatformStats from "../components/home/PlatformStats";
+import RatingChart from "../components/home/RatingChart";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <Features />
       <FeaturedProducts />
       <PlatformStats />
+      <RatingChart />
       <HowItWorks />
       <FAQSection />
       <Newsletter />

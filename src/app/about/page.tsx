@@ -123,7 +123,7 @@ export default function AboutPage(): React.JSX.Element {
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1]">
             Redefining <br className="hidden md:block" />
             <span className="relative inline-block mt-2">
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-cyan-600 dark:from-purple-400 dark:to-cyan-400">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400">
                 Tech Exchange.
               </span>
               <div className="absolute -bottom-2 left-0 w-full h-2 bg-linear-to-r from-purple-500 to-cyan-500 opacity-20 blur-sm" />
