@@ -2,6 +2,8 @@ import { Button, Table } from "@heroui/react";
 import { serverUserSession } from "../../../lib/serverUserSession";
 import Image from "next/image";
 import { LuPackageOpen } from "react-icons/lu";
+import DeleteProductModal from "../../../components/manage-products/DeleteProductModal";
+import { FaRegEye } from "react-icons/fa6";
 
 // 1. TypeScript Interface for strict type safety
 interface IMyProduct {
@@ -106,15 +108,10 @@ const ManageProductPage = async () => {
                     </Table.Cell>
                     <Table.Cell>
                       <div className="flex gap-2 items-center">
-                        <Button
-                          variant="outline"
-                          className="rounded-lg dark:border-gray-400"
-                        >
-                          View
+                        <Button className="bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-blue-600 dark:text-blue-400 rounded-xl border border-blue-100/50 dark:border-blue-500/20">
+                          <FaRegEye className="text-blue-500 dark:text-blue-400" />
                         </Button>
-                        <Button variant="danger" className="rounded-lg">
-                          Delete
-                        </Button>
+                        <DeleteProductModal productData={product} />
                       </div>
                     </Table.Cell>
                   </Table.Row>
