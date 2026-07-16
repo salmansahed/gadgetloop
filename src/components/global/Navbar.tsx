@@ -12,6 +12,7 @@ import ThemeSwitcher from "../theme-switcher";
 import { authClient } from "../../lib/auth-client";
 import LogoutModal from "../auth/LogoutModal";
 import { useClientUserSession } from "../../hooks/user-session/useClientUserSession";
+import Image from "next/image";
 
 interface NavLink {
   name: string;
@@ -96,10 +97,26 @@ export default function Navbar(): React.JSX.Element {
               ) : user ? (
                 <div className="space-x-4 flex items-center">
                   <ThemeSwitcher />
-                  <Button className="bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-300">
-                    <IoGrid />
-                    Dashboard
-                  </Button>
+                  <div className="flex items-center gap-3">
+                    <div className="p-0.5 rounded-full border-2 border-purple-600 dark:border-purple-500 flex items-center justify-center shrink-0">
+                      <Image
+                        src={user.image}
+                        alt="User Avatar"
+                        width={32}
+                        height={32}
+                        className="size-8 rounded-full object-cover"
+                      />
+                    </div>
+
+                    <div className="flex flex-col leading-tight">
+                      <span className="font-semibold text-sm text-zinc-800 dark:text-zinc-200">
+                        {user.name}
+                      </span>
+                      <span className="text-xs text-zinc-500 dark:text-zinc-400 capitalize">
+                        {user.role}
+                      </span>
+                    </div>
+                  </div>
                   <LogoutModal />
                 </div>
               ) : (
@@ -147,6 +164,35 @@ export default function Navbar(): React.JSX.Element {
         {isOpen && (
           <div className="absolute top-16 left-0 w-full z-50 bg-white/95 backdrop-blur-lg dark:bg-gray-900/95 border-b border-gray-200 dark:border-gray-800 shadow-xl lg:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {/* ⚡ ১. ইউজার লগইন থাকলে প্রোফাইল কার্ডটি এখন একদম সবার উপরে রেন্ডার হবে */}
+              {user && (
+                <div className="px-3 pt-1 pb-3 mb-2 border-b border-gray-100 dark:border-gray-800/60">
+                  <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl border border-gray-100 dark:border-gray-800/80">
+                    {/* গোল ব্লু বর্ডারসহ ইমেজ কন্টেইনার */}
+                    <div className="p-0.5 rounded-full border-2 border-blue-600 dark:border-blue-500 flex items-center justify-center shrink-0">
+                      <Image
+                        src={user.image}
+                        alt="User Avatar"
+                        width={36}
+                        height={36}
+                        className="size-9 rounded-full object-cover"
+                      />
+                    </div>
+
+                    {/* ইউজারের নাম ও রোল টেক্সট */}
+                    <div className="flex flex-col leading-tight">
+                      <span className="font-bold text-base text-zinc-800 dark:text-zinc-200">
+                        {user.name || "Salman Sahed"}
+                      </span>
+                      <span className="text-xs text-zinc-500 dark:text-zinc-400 capitalize">
+                        {user.role || "User"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ⚡ ২. নেভিগেশন লিংকসমূহ (প্রোফাইল কার্ডের নিচে থাকবে) */}
               {currentLinks.map((link: NavLink, index: number) => (
                 <Link
                   key={index}
@@ -158,28 +204,19 @@ export default function Navbar(): React.JSX.Element {
                 </Link>
               ))}
 
-              {/* Mobile Action Buttons */}
+              {/* ⚡ ৩. বটম অ্যাকশন সেকশন (লগআউট অথবা সাইন-আপ/লগইন বাটন) */}
               <div className="pt-4 pb-2 border-t border-gray-200 dark:border-gray-700 px-3">
                 {user ? (
-                  <div className="flex flex-col space-y-3">
-                    <Button
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                      className="w-full bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-300"
-                    >
-                      <IoGrid />
-                      Dashboard
-                    </Button>
+                  // ইউজার লগইন থাকলে নিচে শুধু লগআউট মডাল/বাটনটি থাকবে
+                  <div className="w-full">
                     <LogoutModal />
                   </div>
                 ) : (
+                  // ইউজার লগইন না থাকলে নিচে সাইন-আপ এবং লগইন বাটন দেখাবে
                   <div className="flex flex-col space-y-3">
                     <Link href="/signup">
                       <Button
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
+                        onClick={() => setIsOpen(false)}
                         variant="outline"
                         className="w-full rounded-lg"
                       >
@@ -189,9 +226,7 @@ export default function Navbar(): React.JSX.Element {
                     </Link>
                     <Link href="/login">
                       <Button
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
+                        onClick={() => setIsOpen(false)}
                         className="w-full bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-all duration-200"
                       >
                         <FiLogIn />
