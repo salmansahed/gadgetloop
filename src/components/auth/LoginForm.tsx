@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react"; 
+import { useState } from "react";
 import {
   Button,
   Description,
@@ -25,21 +25,18 @@ const LoginForm = (): React.JSX.Element => {
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-    const userData = Object.fromEntries(formData.entries()) as Record<
-      string,
-      string
-    >;
-
     const { error } = await authClient.signIn.email({
-      email: userData.email, 
-      password: userData.password, 
-      rememberMe: true, 
+      email: email,
+      password: password,
+      rememberMe: true,
       callbackURL: "/",
     });
 
@@ -49,6 +46,12 @@ const LoginForm = (): React.JSX.Element => {
       toast.success("Login successful! Redirecting...");
       router.push("/");
     }
+  };
+
+  const handleDemoLogin = (): void => {
+    setEmail("demogadgetlooplogin@gmal.com");
+    setPassword("YourPass99");
+    toast.info("Demo credentials loaded! Click Login to proceed.");
   };
 
   const handleGoogleLogin = async (): Promise<void> => {
@@ -71,10 +74,21 @@ const LoginForm = (): React.JSX.Element => {
         </p>
       </div>
 
+      <Button
+        type="button"
+        variant="outline"
+        className="bg-gray-100 w-full rounded-lg customShadow dark:bg-neutral-700 font-semibold"
+        onPress={handleDemoLogin}
+      >
+        Demo Login
+      </Button>
+
       {/* Email Field */}
       <TextField
         isRequired
         className="w-full flex flex-col gap-1.5"
+        value={email}
+        onChange={setEmail}
         validate={(value: string) => {
           if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
             return "Please enter a valid email address";
@@ -99,6 +113,8 @@ const LoginForm = (): React.JSX.Element => {
         className="w-full flex flex-col gap-1.5"
         name="password"
         isRequired
+        value={password}
+        onChange={setPassword}
         validate={(value: string) => {
           if (value.length < 8) {
             return "Password must be at least 8 characters";
