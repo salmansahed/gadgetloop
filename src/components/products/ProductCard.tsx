@@ -15,6 +15,7 @@ interface ProductItem {
   productPrice: number;
   averageRating: number;
   productBrand: string;
+  productDescription: string;
 }
 
 // 2. Define the interface for the Component Props
@@ -32,6 +33,7 @@ const ProductCard = ({ product }: ProductCardProps): React.JSX.Element => {
     productPrice,
     averageRating,
     productBrand,
+    productDescription,
   } = product;
 
   return (
@@ -65,6 +67,9 @@ const ProductCard = ({ product }: ProductCardProps): React.JSX.Element => {
         <h3 className="font-bold text-sm sm:text-base text-slate-800 dark:text-zinc-100 group-hover:text-slate-900 dark:hover:text-white transition-colors duration-300 line-clamp-1 mb-1">
           {productName}
         </h3>
+        <p className="text-sm text-slate-600 dark:text-zinc-400 group-hover:text-slate-800 dark:hover:text-zinc-200 transition-colors duration-300 line-clamp-2 mb-2">
+          {productDescription}
+        </p>
 
         {/* Advanced Micro-Fractions Star Ratings Layout */}
         <div className="flex items-center gap-0.5 mb-2.5">
@@ -108,7 +113,7 @@ const ProductCard = ({ product }: ProductCardProps): React.JSX.Element => {
             <span>{productPrice}</span>
           </div>
           <Link
-            href={`/product-details/${_id}`}
+            href={`/product/details/${_id}`}
             className="text-xs font-bold text-slate-500 dark:text-zinc-400 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-200 flex items-center gap-0.5"
           >
             View Details

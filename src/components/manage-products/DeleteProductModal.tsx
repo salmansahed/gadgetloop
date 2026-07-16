@@ -10,8 +10,6 @@ import { HiOutlineTrash } from "react-icons/hi";
 interface IProductData {
   _id: string;
   productName: string;
-  // If your product data has other properties, you can add them here optionally, e.g.:
-  // code?: string;
 }
 
 // 2. Interface for the Component Props
