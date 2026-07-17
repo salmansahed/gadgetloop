@@ -389,7 +389,7 @@ const AddProductForm = (): React.JSX.Element => {
               className="w-full md:w-auto px-8 h-12 text-sm font-semibold text-white bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl shadow-md transition-all active:scale-98"
             >
               <FiUploadCloud className="group-hover:scale-125 transition-all duration-300" />
-              {isUploading ? "Uploading Photo..." : "Create Account"}
+              {isUploading ? "Uploading Photo..." : "Add Product"}
             </Button>
           </div>
         </FieldGroup>
