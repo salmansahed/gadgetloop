@@ -110,7 +110,7 @@ export default function Footer(): React.JSX.Element {
             © 2026 GadgetLoop Inc. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-zinc-400">
-            <Link href="/" className="hover:text-white cursor-pointer">
+            <Link href="/privacy-policy" className="hover:text-white cursor-pointer">
               Privacy Policy
             </Link>
             <Link href="/" className="hover:text-white cursor-pointer">
