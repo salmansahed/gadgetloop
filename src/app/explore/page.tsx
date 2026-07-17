@@ -8,9 +8,12 @@ interface ExplorePageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
+// Main Explore Page component handling URL search parameters
 const ExplorePage = async (props: ExplorePageProps) => {
+  // Extract URL search parameters asynchronously (Next.js 15+ requirement)
   const searchParams = await props.searchParams;
 
+  // Build query string dynamically based on active filters
   const queryParams = new URLSearchParams();
   if (searchParams.search)
     queryParams.set("search", searchParams.search.toString());
@@ -26,9 +29,20 @@ const ExplorePage = async (props: ExplorePageProps) => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* --- Page Heading Section --- */}
+      <div className="mb-8 text-center md:text-left space-y-2">
+        <h1 className="text-3xl md:text-4xl font-black tracking-tight bg-linear-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+          Explore Gadgets
+        </h1>
+        <p className="text-sm md:text-base text-zinc-500 dark:text-zinc-400">
+          Find the perfect tech gear that matches your needs and budget.
+        </p>
+      </div>
+
       {/* Search and control dashboard layout */}
       <ExploreFilters />
 
+      {/* Suspense handles the loading state while ProductData fetches data */}
       <Suspense key={queryString} fallback={<ProductGridSkeleton />}>
         <ProductData queryString={queryString} />
       </Suspense>
@@ -38,11 +52,13 @@ const ExplorePage = async (props: ExplorePageProps) => {
 
 export default ExplorePage;
 
+// Server Component responsible for fetching and displaying product data
 async function ProductData({ queryString }: { queryString: string }) {
+  // Fetch products from the backend API with the active query string
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?${queryString}`,
     {
-      cache: "no-store",
+      cache: "no-store", // Ensure fresh data on every request
     },
   );
 
@@ -51,10 +67,12 @@ async function ProductData({ queryString }: { queryString: string }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
       {products.length > 0 ? (
+        // Map through the products array and render individual ProductCards
         products.map((product: any) => (
           <ProductCard key={product._id} product={product} />
         ))
       ) : (
+        // Render glassmorphic empty state if no products match the current filters
         <div className="col-span-full w-full flex items-center justify-center py-12 px-4 sm:px-6 md:py-20">
           {/* Glassmorphic Empty Slate Box Container */}
           <div className="relative w-full max-w-5xl p-8 sm:p-12 md:p-16 rounded-3xl border border-slate-200/60 dark:border-zinc-800/80 bg-linear-to-b from-slate-50/40 to-white/10 dark:from-zinc-900/40 dark:to-zinc-950/20 backdrop-blur-xl customShadow overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
@@ -93,7 +111,7 @@ async function ProductData({ queryString }: { queryString: string }) {
   );
 }
 
-// Skeleton
+// Loading Skeleton Component for Suspense Fallback UI
 function ProductGridSkeleton() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">

@@ -29,7 +29,7 @@ const ManageProductPage = async () => {
   const data: IMyProduct[] = await res.json();
 
   return (
-    <div className="py-20 px-4 container mx-auto space-y-8">
+    <div className="py-10 sm:py-20 px-4 container mx-auto space-y-8">
       {/* Dynamic Dashboard Title Section */}
       <div className="flex flex-col space-y-2 border-b border-slate-100 dark:border-zinc-800 pb-5">
         <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-zinc-50">

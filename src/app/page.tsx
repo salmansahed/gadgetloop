@@ -14,8 +14,8 @@ const Home = () => {
     <div>
       <HeroSection />
       <Categories />
-      <Features />
       <FeaturedProducts />
+      <Features />
       <PlatformStats />
       <RatingChart />
       <HowItWorks />
