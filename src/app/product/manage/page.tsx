@@ -5,6 +5,8 @@ import { LuPackageOpen } from "react-icons/lu";
 import DeleteProductModal from "../../../components/manage-products/DeleteProductModal";
 import { FaRegEye } from "react-icons/fa6";
 import Link from "next/link";
+import { auth } from "../../../lib/auth";
+import { headers } from "next/headers";
 
 // 1. TypeScript Interface for strict type safety
 interface IMyProduct {
@@ -19,10 +21,19 @@ interface IMyProduct {
 const ManageProductPage = async () => {
   const { user } = await serverUserSession();
 
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
   // Dynamic fetch using current logged-in user's ID
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/my-products?userId=${user?.id}`,
-    { cache: "no-store" },
+    {
+      cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
   );
 
   // 2. Explicitly type the fetched JSON array

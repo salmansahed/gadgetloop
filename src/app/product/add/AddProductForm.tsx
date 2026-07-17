@@ -22,6 +22,7 @@ import useImageUpload from "../../../hooks/image-upload/userImageUpload";
 import { toast } from "react-toastify";
 import { useClientUserSession } from "../../../hooks/user-session/useClientUserSession";
 import { useRouter } from "next/navigation";
+import { authClient } from "../../../lib/auth-client";
 
 // CategoryItem interface defines the structure of a category item with a key and label.
 interface CategoryItem {
@@ -102,12 +103,15 @@ const AddProductForm = (): React.JSX.Element => {
     };
 
     try {
+      const { data: tokenData } = await authClient.token();
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/product/add`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
           },
           body: JSON.stringify(finalAddProductData),
         },

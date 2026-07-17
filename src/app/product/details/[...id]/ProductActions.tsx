@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { authClient } from "../../../../lib/auth-client";
 
 interface ProductActionsProps {
   isErrorPage: boolean;
@@ -60,6 +61,7 @@ export default function ProductActions({
     }
 
     try {
+      const { data: tokenData } = await authClient.token();
       // 2. Send PATCH request to the backend with the rating value
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/review/${productId}`,
@@ -67,6 +69,7 @@ export default function ProductActions({
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
           },
           body: JSON.stringify({ rating }),
         },

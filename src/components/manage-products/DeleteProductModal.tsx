@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { HiOutlineTrash } from "react-icons/hi";
+import { authClient } from "../../lib/auth-client";
 
 // 1. Interface for the product object data structure
 interface IProductData {
@@ -32,10 +33,16 @@ const DeleteProductModal: React.FC<DeleteProductModalProps> = ({
     setIsDeleting(true);
 
     try {
+      const { data: tokenData } = await authClient.token();
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/products/delete/${_id}`,
         {
           method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
+          },
         },
       );
 
