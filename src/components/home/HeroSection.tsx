@@ -5,7 +5,7 @@ import { FiShoppingBag, FiPlusCircle } from "react-icons/fi";
 
 export default function HeroSection(): React.JSX.Element {
   return (
-    <section className="relative min-h-[70vh] lg:min-h-[80vh] w-full flex flex-col items-center justify-center px-6 overflow-hidden">
+    <section className="relative min-h-[70vh] w-full flex flex-col items-center justify-center px-6 overflow-hidden">
       {/* 📦 Main Content Container */}
       <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center">
         {/* 🏷️ Premium Marketplace Badge */}

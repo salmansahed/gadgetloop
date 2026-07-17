@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Categories from "../components/home/Categories";
 import FAQSection from "../components/home/FAQSection";
 import FeaturedProducts from "../components/home/FeaturedProducts";
