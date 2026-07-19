@@ -37,6 +37,7 @@ export default function Navbar(): React.JSX.Element {
     { name: "Explore", path: "/explore" },
     { name: "Add Gadget", path: "/product/add" },
     { name: "Manage Items", path: "/product/manage" },
+    { name: "Contact Support", path: "/contact" },
   ];
 
   const currentLinks: NavLink[] = user ? privateLinks : publicLinks;
